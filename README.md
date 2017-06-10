@@ -1,1 +1,2 @@
 # 172RSEG
+Brad Hardwick
