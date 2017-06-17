@@ -1,0 +1,42 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<link href="../static/css/style.scss" th:href="@{/css/style.scss}" rel="stylesheet" />
+<link href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet" media="screen"/>
+</head>
+<body>
+
+<div class="container-fluid">
+
+<div id="LogoWrapper"> 
+  
+</div>
+
+<br /><br /><br /><br /><br /><br />
+	<div th:if="${message}">
+		<h2 th:text="${message}"/>
+	</div>
+
+	<div class="inputwrapper">
+		<form method="POST" enctype="multipart/form-data" action="/">
+			<table>
+				<tr><td>File to upload:</td><td><input type="file" name="file" /></td></tr>
+				<tr><td></td>
+				<td><input type="submit" value="Lets Upload" />
+				 </td></tr>
+			</table>
+		</form>
+	</div>
+
+	<div style="background-color: #fff;">
+		<ul>
+			<li th:each="file : ${files}">
+				<a th:href="${file}" th:text="${file}" />
+			</li>
+		</ul>
+	</div>
+
+<script th:src="@{/js/app.js}"></script>
+
+</div>
+</body>
+</html>
