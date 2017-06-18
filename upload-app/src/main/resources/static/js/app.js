@@ -1,8 +1,14 @@
-var app = angular.module("app", []);
-
-app.controller("Ctrl", function ($scope, $timeout, $interval) {
-    $scope.CurrScreen = 'Create';
-    $scope.States = [{ Display: " Alabama", Value: "AL" },
+var app = angular.module("app", ["angularFileUpload"]);
+app.controller("CreateCtrl", function(
+  $scope,
+  $timeout,
+  $interval,
+  FileUploader
+) {
+  $scope.File = null;
+  $scope.Model = {};
+  $scope.States = [
+    { Display: " Alabama", Value: "AL" },
     { Display: " Alaska", Value: "AK" },
     { Display: " Arizona", Value: "AZ" },
     { Display: " Arkansas", Value: "AR" },
@@ -51,26 +57,55 @@ app.controller("Ctrl", function ($scope, $timeout, $interval) {
     { Display: " Washington", Value: "WA" },
     { Display: " West Virginia", Value: "WV" },
     { Display: " Wisconsin", Value: "WI" },
-    { Display: " Wyoming", Value: "WY" },
-    ]
-    $scope.ChangeScreen = function (Screen) {
-        switch (Screen) {
-            case "Splash":
-            case "splash":
-                $scope.CurrScreen = 'Splash';
-                return;
+    { Display: " Wyoming", Value: "WY" }
+  ];
 
-            case "Add":
-            case "Create":
-                $scope.CurrScreen = 'Create';
-                return;
-            case "View":
-            case "List":
-                $scope.CurrScreen = 'List';
-                return;
-        }
-
+  var uploader = ($scope.uploader = new FileUploader({
+    url: "localhost:60965/documentation/index"
+  }));
+  uploader.filters.push({
+    name: "customFilter",
+    fn: function(item /*{File|FileLikeObject}*/, options) {
+      return this.queue.length < 2;
     }
+  });
 
+  uploader.onWhenAddingFileFailed = function(
+    item /*{File|FileLikeObject}*/,
+    filter,
+    options
+  ) {
+    console.info("onWhenAddingFileFailed", item, filter, options);
+  };
+  uploader.onAfterAddingFile = function(fileItem) {
+    console.info("onAfterAddingFile", fileItem);
+    $scope.File = fileItem._file;
+    
+  };
+  uploader.onSuccessItem = function(fileItem, response, status, headers) {
+    console.log("Success");
+    
+  };
+});
 
+app.controller("Ctrl", function($scope, $timeout, $interval) {
+  $scope.CurrScreen = "Create";
+
+  $scope.ChangeScreen = function(Screen) {
+    switch (Screen) {
+      case "Splash":
+      case "splash":
+        $scope.CurrScreen = "Splash";
+        return;
+
+      case "Add":
+      case "Create":
+        $scope.CurrScreen = "Create";
+        return;
+      case "View":
+      case "List":
+        $scope.CurrScreen = "List";
+        return;
+    }
+  };
 });
