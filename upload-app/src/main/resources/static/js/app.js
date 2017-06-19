@@ -103,7 +103,7 @@ app.controller("CreateCtrl", function(
 });
 
 app.controller("Ctrl", function($scope, $timeout, $interval) {
-  $scope.CurrScreen = "Create";
+  $scope.CurrScreen = "About";
 
   $scope.ChangeScreen = function(Screen) {
     switch (Screen) {
@@ -111,7 +111,9 @@ app.controller("Ctrl", function($scope, $timeout, $interval) {
       case "splash":
         $scope.CurrScreen = "Splash";
         return;
-
+ case "About":
+        $scope.CurrScreen = "About";
+        return;
       case "Add":
       case "Create":
         $scope.CurrScreen = "Create";
