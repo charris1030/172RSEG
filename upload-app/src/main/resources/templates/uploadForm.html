@@ -66,6 +66,7 @@
 		</ul>
 	</div> -->
 	
+
 <div id="LogoWrapper"> 
   
   <ul id="LogoNames">
@@ -97,13 +98,21 @@
     <br/>
     <input type="text"  ng-model="Model.Address" placeholder="Address"/>
     <input type="text"  ng-model="Model.City" placeholder="City"/>
-    <input type="text"  ng-model="Model.State" placeholder="State"/>
-    <select ng-model="Item" ng-options="P.Value as P.Display for P in States"></select>
-    <div ng-if="File!=null">{{File.name}}</div>
+    <input type="text"  ng-model="Model.Zip" placeholder="Zip Code"/>
+    <select ng-model="Item"  ng-options="P.Value as P.Display for P in States"></select>
+   
+    <div ng-repeat="n in uploader.queue" ng-if="uploader.queue.length>0">{{n._file.name}}
+      <div ng-thumb="{file:n._file, height:200}">
+        <canvas width="500" height="200"></canvas>
+      </div>
+      
+    </div>
     <div ng-if="File==null" class='Dropbox' nv-file-over="" uploader="uploader" over-class="Accent">Drop File Here</div>
 </div>
-  <a class="button">Lets Upload</a>
+  
+  <a class="button" ng-click="Upload(uploader.queue[0])">Lets Upload</a>
 </div>
+
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-file-upload/2.3.4/angular-file-upload.js"></script>
