@@ -69,7 +69,7 @@ app.controller("CreateCtrl", function(
     
   }
   var uploader = $scope.uploader =  new FileUploader({
-   url:"http://fileuploadapp-env.us-east-2.elasticbeanstalk.com/",
+   url:"/",
    method:"POST"
   });
 
@@ -97,7 +97,7 @@ app.controller("CreateCtrl", function(
      $scope.Messages =filename +" uploaded correctly!";
     $scope.Model = null;
     $scope.File = null;   
-    
+    uploader.clearQueue();
   };
 });
 
