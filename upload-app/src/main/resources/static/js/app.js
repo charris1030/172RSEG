@@ -66,10 +66,10 @@ app.controller("CreateCtrl", function(
   {
     console.log(F);
     $http({
-      method:'PUT',
-      headers: { "Content-Type": F.type },
-      url:"https://fileuploadapp-env.us-east-2.elasticbeanstalk.com/",
-      data: F.name
+      method:'POST',
+      headers: { "Content-Type": F.file.type },
+      url:"http://fileuploadapp-env.us-east-2.elasticbeanstalk.com/",
+      data: F.file
     }).then(function(R){
       console.log(R);
     },function(E){console.log(E)});
