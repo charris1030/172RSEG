@@ -118,9 +118,7 @@
 
 <div ng-controller="CreateCtrl" class="wrapper" ng-if="CurrScreen=='Create'" nv-file-drop="" uploader="uploader" filters="queueLimit, customFilter">
   <h2>Lets Add Things</h2>
-  <p>
-    This is a form that will allow you to add things.
-  </p>
+ <p ng-if="Model==null">{{Messages}}</p>
   <div class="inputwrapper">
     <input type="text" ng-model="Model.FirstName" placeholder="First Name" />
     <input type="text" ng-model="Model.LastName" placeholder="Last Name" />
@@ -133,8 +131,8 @@
     <select ng-model="Item" ng-options="P.Value as P.Display for P in States"></select>
 
     <div ng-repeat="n in uploader.queue" ng-if="uploader.queue.length>0">{{n._file.name}}
-      <div ng-thumb="{file:n._file, height:200}">
-        <canvas width="500" height="200"></canvas>
+      <div ng-thumb="{file:n._file, height:150}">
+        <canvas width="500" height="150"></canvas>
       </div>
 
     </div>
@@ -145,11 +143,14 @@
 </div>
 
 <div ng-if="CurrScreen=='List'" class="wrapper">
-		<ul>
+		<h2>Current Files</h2>
+    <p>
+		<ul class="FileList">
 			<li th:each="file : ${files}">
 				<a th:href="${file}" th:text="${file}" />
 			</li>
 		</ul>
+    </p>
 	</div> 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-file-upload/2.3.4/angular-file-upload.js"></script>

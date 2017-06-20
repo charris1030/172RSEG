@@ -8,7 +8,7 @@ app.controller("CreateCtrl", function(
    $http
 ) {
   $scope.File = null;
-  $scope.Model = {};
+  $scope.Model = null;
   $scope.States = [
     { Display: " Alabama", Value: "AL" },
     { Display: " Alaska", Value: "AK" },
@@ -62,21 +62,17 @@ app.controller("CreateCtrl", function(
     { Display: " Wyoming", Value: "WY" }
   ];
 
-  $scope.Upload = function(F)
+   $scope.Upload = function(F)
   {
     console.log(F);
-    $http({
-      method:'POST',
-      headers: { "Content-Type": F.file.type },
-      url:"http://fileuploadapp-env.us-east-2.elasticbeanstalk.com/",
-      data: F.file
-    }).then(function(R){
-      console.log(R);
-    },function(E){console.log(E)});
+    uploader.queue[0].upload();
+    
   }
   var uploader = $scope.uploader =  new FileUploader({
-   
+   url:"http://fileuploadapp-env.us-east-2.elasticbeanstalk.com/",
+   method:"POST"
   });
+
   uploader.filters.push({
     name: "customFilter",
     fn: function(item /*{File|FileLikeObject}*/, options) {
@@ -94,10 +90,13 @@ app.controller("CreateCtrl", function(
   uploader.onAfterAddingFile = function(fileItem) {
     console.info("onAfterAddingFile", fileItem);
     $scope.File = fileItem._file;
-    console.log(uploader.queue);
   };
   uploader.onSuccessItem = function(fileItem, response, status, headers) {
     console.log("Success");
+      var filename = $scope.File.name;
+     $scope.Messages =filename +" uploaded correctly!";
+    $scope.Model = null;
+    $scope.File = null;   
     
   };
 });
